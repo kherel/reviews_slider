@@ -440,7 +440,7 @@ class MyIndicator extends StatelessWidget {
   }
 
   _buildIndicator() {
-    print(possition);
+    var opacityOfYellow = possition > 0.5 ? 1.0 : possition * 2;
     return GestureDetector(
       onPanDown: onDragStart,
       onPanUpdate: onDrag,
@@ -453,9 +453,10 @@ class MyIndicator extends StatelessWidget {
           children: <Widget>[
             Head(
               color: Color(0xFFf4b897),
+              hasShadow: true,
             ),
             Opacity(
-              opacity: possition,
+              opacity: opacityOfYellow,
               child: Head(
                 color: Color(0xFFfee385),
               ),
@@ -471,9 +472,10 @@ class MyIndicator extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  Head({this.color = const Color(0xFFc9ced2)});
+  Head({this.color = const Color(0xFFc9ced2), this.hasShadow = false});
 
   final Color color;
+  final bool hasShadow;
 
   @override
   Widget build(BuildContext context) {
@@ -481,6 +483,9 @@ class Head extends StatelessWidget {
       height: circleDiameter,
       width: circleDiameter,
       decoration: BoxDecoration(
+        boxShadow: hasShadow
+            ? [BoxShadow(color: Colors.black26, offset: Offset(0, 2), blurRadius: 5.0)]
+            : null,
         color: color,
         shape: BoxShape.circle,
       ),
