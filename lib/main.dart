@@ -13,7 +13,14 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         body: SafeArea(
-          child: ReviewSlider(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('How was the help you recived?', style: TextStyle(color: Color(0xFF6f7478), fontSize: 18),),
+              SizedBox(height: 20),
+              ReviewSlider()
+            ],
+          ),
         ),
       ),
     );
@@ -156,7 +163,7 @@ class MeasureLine extends StatelessWidget {
       if (animatingUnitIndex == index) {
         paddingTop = unitAnimatingValue * 5;
         scale = (1 - unitAnimatingValue) * 0.7;
-        opacity = 1 - unitAnimatingValue / 3;
+        opacity = 0.3 + unitAnimatingValue * 0.7;
       }
       res.add(LimitedBox(
         key: ValueKey(text),
@@ -265,11 +272,11 @@ class MyPainter extends CustomPainter {
 
     switch (activeIndex) {
       case 0:
-        angle = 80 - unitAnimatingValue * 75;
-        wide = 70.0 + unitAnimatingValue * 20;
+        angle = 55 - unitAnimatingValue * 50;
+        wide = 80.0;
         break;
       case 1:
-        wide = 90 - unitAnimatingValue * 90;
+        wide = 80 - unitAnimatingValue * 80;
         angle = 5;
         break;
     }
