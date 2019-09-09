@@ -449,6 +449,7 @@ class MyIndicator extends StatelessWidget {
   _buildIndicator() {
     var opacityOfYellow = possition > 0.5 ? 1.0 : possition * 2;
     return GestureDetector(
+      
       onPanDown: onDragStart,
       onPanUpdate: onDrag,
       onPanStart: onDrag,
