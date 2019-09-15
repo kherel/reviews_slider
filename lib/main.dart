@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
 
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('How was the help you recived?', style: TextStyle(color: Color(0xFF6f7478), fontSize: 18),),
+              Text(
+                'How was the help you recived?',
+                style: TextStyle(color: Color(0xFF6f7478), fontSize: 18),
+              ),
               SizedBox(height: 20),
               ReviewSlider()
             ],
@@ -81,10 +85,9 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
     _controller.forward();
   }
 
-  _onDrag(details) {
-    var newAnimatedValue = _calcAnimatedValueFormDragX(
-      details.globalPosition.dx,
-    );
+  void _onDrag(double dx) {
+    var newAnimatedValue = _calcAnimatedValueFormDragX(dx);
+
     if (newAnimatedValue > 0 && newAnimatedValue < reviews.length - 1) {
       setState(
         () {
@@ -98,7 +101,7 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
     return (x - circleDiameter / 2 - paddingSize * 2) / _innerWidth * reviews.length;
   }
 
-  _onDragEnd(_) {
+  void _onDragEnd(_) {
     _controller.duration = Duration(milliseconds: 100);
     _tween.begin = _animationValue;
     _tween.end = _animationValue.round().toDouble();
@@ -130,7 +133,12 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
                 MyIndicator(
                   animationValue: _animationValue,
                   width: _innerWidth,
-                  onDrag: _onDrag,
+                  onDragStart: (details) {
+                    _onDrag(details.globalPosition.dx);
+                  },
+                  onDrag: (details) {
+                    _onDrag(details.globalPosition.dx);
+                  },
                   onDragEnd: _onDragEnd,
                 ),
                 Text(_animationValue.round().toString()),
@@ -449,11 +457,9 @@ class MyIndicator extends StatelessWidget {
   _buildIndicator() {
     var opacityOfYellow = possition > 0.5 ? 1.0 : possition * 2;
     return GestureDetector(
-      
-      onPanDown: onDragStart,
-      onPanUpdate: onDrag,
-      onPanStart: onDrag,
-      onPanEnd: onDragEnd,
+      onHorizontalDragStart: onDragStart,
+      onHorizontalDragUpdate: onDrag,
+      onHorizontalDragEnd: onDragEnd,
       child: Container(
         width: circleDiameter,
         height: circleDiameter,
