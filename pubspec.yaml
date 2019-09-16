@@ -1,9 +1,9 @@
 name: reviews_slider
-description: Animation widget with changing smile to collect users review grade.
+description: Animated widget with changing smile to collect user review score.
 author: Kherel Kechil <kherel@gmail.com>
 homepage: https://github.com/kherel/reviews_slider
 
-version: 1.0.3
+version: 1.0.4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

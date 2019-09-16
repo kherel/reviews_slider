@@ -1,6 +1,6 @@
 # reviews_slider
 
-Animated review slider
+Animated widget with changing smile to collect user review score
 
 ![mobile](example_mobile.gif)
 
@@ -8,11 +8,11 @@ Animated review slider
 
 ## Getting started
 
-You should ensure that you add the router as a dependency in your flutter project.
+Add reviews_slider: "^1.0.4" in your pubspec.yaml dependencies.
 
 ```yaml
 dependencies:
- reviews_slider: "^1.0.3"
+ reviews_slider: "^1.0.4"
 ```
 
 ### How To Use
