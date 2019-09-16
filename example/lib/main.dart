@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'How was the help you recived?',
+                'How was the help you received?',
                 style: TextStyle(color: Color(0xFF6f7478), fontSize: 18),
               ),
               SizedBox(height: 20),
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
               Text(selectedValue1.toString()),
               SizedBox(height: 20),
               Text(
-                'How was the help you recived?',
+                '¿Cómo fue la ayuda que recibiste?',
                 style: TextStyle(color: Color(0xFF6f7478), fontSize: 18),
               ),
               SizedBox(height: 20),
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                   optionStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                   onChange: onChange2,
                   initialValue: 1,
-                  options: ['Ужасно', 'Плохо', 'Пойдет', 'Хорошо', 'Отлично']),
+                  options: ['Terrible', 'Malo', 'Bien', 'Vale', 'Genial']),
               Text(selectedValue2.toString()),
             ],
           ),

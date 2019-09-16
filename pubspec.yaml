@@ -3,7 +3,7 @@ description: Reviews slider with animated smile
 author: Kherel Kechil <kherel@gmail.com>
 homepage: https://github.com/kherel/reviews_slider
 
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
