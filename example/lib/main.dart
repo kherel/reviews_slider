@@ -12,11 +12,10 @@ class _MyAppState extends State<MyApp> {
   int selectedValue1;
   int selectedValue2;
 
-  int onChange1(int value) {
+  void onChange1(int value) {
     setState(() {
       selectedValue1 = value;
     });
-    return 5;
   }
 
   void onChange2(int value) {
@@ -53,7 +52,10 @@ class _MyAppState extends State<MyApp> {
               ),
               SizedBox(height: 20),
               ReviewSlider(
-                  optionStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  optionStyle: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                   onChange: onChange2,
                   initialValue: 1,
                   options: ['Terrible', 'Malo', 'Bien', 'Vale', 'Genial']),

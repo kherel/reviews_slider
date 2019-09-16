@@ -43,10 +43,11 @@ class ReviewSlider extends StatefulWidget {
   _ReviewSliderState createState() => _ReviewSliderState();
 }
 
-class _ReviewSliderState extends State<ReviewSlider>
-    with SingleTickerProviderStateMixin {
+class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderStateMixin {
   Animation<double> _animation;
   double _animationValue;
+  double _xOffset;
+
   AnimationController _controller;
   Tween<double> _tween;
 
@@ -106,12 +107,6 @@ class _ReviewSliderState extends State<ReviewSlider>
     }
   }
 
-  _calcAnimatedValueFormDragX(x, innerWidth) {
-    return (x - circleDiameter / 2 - paddingSize * 2) /
-        innerWidth *
-        widget.options.length;
-  }
-
   void _onDragEnd(_) {
     _controller.duration = Duration(milliseconds: 100);
     _tween.begin = _animationValue;
@@ -122,38 +117,46 @@ class _ReviewSliderState extends State<ReviewSlider>
     widget.onChange(_animationValue.round());
   }
 
+  void _onDragStart(x, width) {
+    var oneStepWidth = (width - circleDiameter) / (widget.options.length - 1);
+    _xOffset = x - (oneStepWidth * _animationValue);
+  }
+
+  _calcAnimatedValueFormDragX(x, innerWidth) {
+    x = x - _xOffset;
+    return x / (innerWidth - circleDiameter) * (widget.options.length - 1);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: paddingSize),
-        height: 100,
-        child: LayoutBuilder(
-          builder: (context, size) {
-            return Stack(
-              children: <Widget>[
-                MeasureLine(
-                  states: widget.options,
-                  handleTap: handleTap,
-                  animationValue: _animationValue,
-                  width: size.maxWidth,
-                  optionStyle: widget.optionStyle,
-                ),
-                MyIndicator(
-                  animationValue: _animationValue,
-                  width: size.maxWidth,
-                  onDragStart: (details) {
-                    _onDrag(details.globalPosition.dx, size.maxWidth);
-                  },
-                  onDrag: (details) {
-                    _onDrag(details.globalPosition.dx, size.maxWidth);
-                  },
-                  onDragEnd: _onDragEnd,
-                ),
-              ],
-            );
-          },
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: paddingSize),
+      height: 100,
+      child: LayoutBuilder(
+        builder: (context, size) {
+          return Stack(
+            children: <Widget>[
+              MeasureLine(
+                states: widget.options,
+                handleTap: handleTap,
+                animationValue: _animationValue,
+                width: size.maxWidth,
+                optionStyle: widget.optionStyle,
+              ),
+              MyIndicator(
+                animationValue: _animationValue,
+                width: size.maxWidth,
+                onDragStart: (details) {
+                  _onDragStart(details.globalPosition.dx, size.maxWidth);
+                },
+                onDrag: (details) {
+                  _onDrag(details.globalPosition.dx, size.maxWidth);
+                },
+                onDragEnd: _onDragEnd,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -232,23 +235,25 @@ class MeasureLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: circleDiameter / 2,
-          left: 20,
-          width: width - 40,
-          child: Container(
-            width: width,
-            color: Color(0xFFeceeef),
-            height: 3,
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            top: circleDiameter / 2,
+            left: 20,
+            width: width - 40,
+            child: Container(
+              width: width,
+              color: Color(0xFFeceeef),
+              height: 3,
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildUnits(),
-        ),
-      ],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: _buildUnits(),
+          ),
+        ],
+      ),
     );
   }
 }

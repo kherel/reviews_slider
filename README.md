@@ -1,8 +1,10 @@
 # reviews_slider
 
-Flutter reviews slider;
+Animated review slider
 
-![example](example.gif)
+![mobile](example_mobile.gif)
+
+![tablet](example_tablet.gif)
 
 ## Getting started
 
@@ -10,7 +12,7 @@ You should ensure that you add the router as a dependency in your flutter projec
 
 ```yaml
 dependencies:
- reviews_slider: "^1.0.0"
+ reviews_slider: "^1.0.3"
 ```
 
 ### How To Use

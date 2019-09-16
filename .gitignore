@@ -1,3 +1,5 @@
+lib/main.dart
+
 # Miscellaneous
 *.class
 *.log
@@ -14,6 +16,10 @@
 *.ipr
 *.iws
 .idea/
+
+android/
+test/
+ios/
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
