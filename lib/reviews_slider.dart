@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
 
-
 typedef OnChange = void Function(int index);
 
 class ReviewSlider extends StatefulWidget {
@@ -22,7 +21,7 @@ class ReviewSlider extends StatefulWidget {
         ),
         super(key: key);
 
-  /// The onChange callback calls every time when a pointer have changed 
+  /// The onChange callback calls every time when a pointer have changed
   /// the value of the slider and is no longer in contact with the screen.
   /// Callback function argument is an int number from 0 to 4, where
   /// 0 is the worst review value and 4 is the best review value
@@ -35,7 +34,6 @@ class ReviewSlider extends StatefulWidget {
   /// ),
   /// ```
 
-
   final OnChange onChange;
   final int initialValue;
   final List<String> options;
@@ -45,7 +43,8 @@ class ReviewSlider extends StatefulWidget {
   _ReviewSliderState createState() => _ReviewSliderState();
 }
 
-class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderStateMixin {
+class _ReviewSliderState extends State<ReviewSlider>
+    with SingleTickerProviderStateMixin {
   Animation<double> _animation;
   double _animationValue;
   AnimationController _controller;
@@ -108,7 +107,9 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
   }
 
   _calcAnimatedValueFormDragX(x, innerWidth) {
-    return (x - circleDiameter / 2 - paddingSize * 2) / innerWidth * widget.options.length;
+    return (x - circleDiameter / 2 - paddingSize * 2) /
+        innerWidth *
+        widget.options.length;
   }
 
   void _onDragEnd(_) {
