@@ -1,4 +1,5 @@
 # reviews_slider
+[![Pub](https://img.shields.io/pub/v/reviews_slider.svg)](https://pub.dartlang.org/packages/reviews_slider)
 
 Animated widget with changing smile to collect user review score
 
