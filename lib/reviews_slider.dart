@@ -11,6 +11,8 @@ class ReviewSlider extends StatefulWidget {
     this.initialValue = 2,
     this.options = const ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
     this.optionStyle,
+    this.width,
+    this.circleDiameter = 60
   })  : assert(
           initialValue > 0 && initialValue <= 4,
           'Initial value should be between 0 and 4',
@@ -38,7 +40,8 @@ class ReviewSlider extends StatefulWidget {
   final int initialValue;
   final List<String> options;
   final TextStyle optionStyle;
-
+  final double width;
+  final double circleDiameter;
   @override
   _ReviewSliderState createState() => _ReviewSliderState();
 }
@@ -118,13 +121,13 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
   }
 
   void _onDragStart(x, width) {
-    var oneStepWidth = (width - circleDiameter) / (widget.options.length - 1);
+    var oneStepWidth = (width - widget.circleDiameter) / (widget.options.length - 1);
     _xOffset = x - (oneStepWidth * _animationValue);
   }
 
   _calcAnimatedValueFormDragX(x, innerWidth) {
     x = x - _xOffset;
-    return x / (innerWidth - circleDiameter) * (widget.options.length - 1);
+    return x / (innerWidth - widget.circleDiameter) * (widget.options.length - 1);
   }
 
   @override
@@ -140,17 +143,20 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
                 states: widget.options,
                 handleTap: handleTap,
                 animationValue: _animationValue,
-                width: size.maxWidth,
+//                width: size.maxWidth,
+                width: widget.width != null && widget.width < size.maxWidth ? widget.width : size.maxWidth,
                 optionStyle: widget.optionStyle,
+                circleDiameter: widget.circleDiameter,
               ),
               MyIndicator(
+                circleDiameter: widget.circleDiameter,
                 animationValue: _animationValue,
-                width: size.maxWidth,
+                width: widget.width != null && widget.width < size.maxWidth ? widget.width : size.maxWidth,
                 onDragStart: (details) {
-                  _onDragStart(details.globalPosition.dx, size.maxWidth);
+                  _onDragStart(details.globalPosition.dx, widget.width != null && widget.width < size.maxWidth ? widget.width : size.maxWidth);
                 },
                 onDrag: (details) {
-                  _onDrag(details.globalPosition.dx, size.maxWidth);
+                  _onDrag(details.globalPosition.dx, widget.width != null && widget.width < size.maxWidth ? widget.width : size.maxWidth);
                 },
                 onDragEnd: _onDragEnd,
               ),
@@ -162,7 +168,7 @@ class _ReviewSliderState extends State<ReviewSlider> with SingleTickerProviderSt
   }
 }
 
-const double circleDiameter = 60;
+//const double circleDiameter = 30;
 const double paddingSize = 10;
 
 class MeasureLine extends StatelessWidget {
@@ -172,6 +178,7 @@ class MeasureLine extends StatelessWidget {
     this.states,
     this.width,
     this.optionStyle,
+    this.circleDiameter
   });
 
   final double animationValue;
@@ -179,7 +186,7 @@ class MeasureLine extends StatelessWidget {
   final List<String> states;
   final double width;
   final TextStyle optionStyle;
-
+  final double circleDiameter;
   List<Widget> _buildUnits() {
     var res = <Widget>[];
     var animatingUnitIndex = animationValue.round();
@@ -208,8 +215,11 @@ class MeasureLine extends StatelessWidget {
                   scale: scale,
                   child: Stack(
                     children: [
-                      Head(),
+                      Head(
+                        circleDiameter: circleDiameter,
+                      ),
                       Face(
+                        circleDiameter: circleDiameter,
                         color: Colors.white,
                         animationValue: index.toDouble(),
                       )
@@ -262,11 +272,12 @@ class Face extends StatelessWidget {
   Face({
     this.color = const Color(0xFF616154),
     this.animationValue,
+    this.circleDiameter
   });
 
   final double animationValue;
   final Color color;
-
+  final double circleDiameter;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -456,6 +467,7 @@ class MyIndicator extends StatelessWidget {
     this.onDrag,
     this.onDragStart,
     this.onDragEnd,
+    this.circleDiameter
   })  : width = width - circleDiameter,
         possition = animationValue == 0 ? 0 : animationValue / 4;
 
@@ -465,6 +477,7 @@ class MyIndicator extends StatelessWidget {
   final Function onDragStart;
   final double possition;
   final double width;
+  final double circleDiameter;
 
   _buildIndicator() {
     var opacityOfYellow = possition > 0.5 ? 1.0 : possition * 2;
@@ -489,6 +502,7 @@ class MyIndicator extends StatelessWidget {
             ),
             Face(
               animationValue: animationValue,
+              circleDiameter: circleDiameter,
             )
           ],
         ),
@@ -509,11 +523,11 @@ class MyIndicator extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  Head({this.color = const Color(0xFFc9ced2), this.hasShadow = false});
+  Head({this.color = const Color(0xFFc9ced2), this.hasShadow = false, this.circleDiameter});
 
   final Color color;
   final bool hasShadow;
-
+  final double circleDiameter;
   @override
   Widget build(BuildContext context) {
     return Container(
