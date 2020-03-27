@@ -14,7 +14,7 @@ class ReviewSlider extends StatefulWidget {
     this.width,
     this.circleDiameter = 60
   })  : assert(
-          initialValue > 0 && initialValue <= 4,
+          initialValue >= 0 && initialValue <= 4,
           'Initial value should be between 0 and 4',
         ),
         assert(
