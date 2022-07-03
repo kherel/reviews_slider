@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
 
@@ -42,6 +41,7 @@ class ReviewSlider extends StatefulWidget {
   final TextStyle? optionStyle;
   final double? width;
   final double circleDiameter;
+
   @override
   _ReviewSliderState createState() => _ReviewSliderState();
 }
@@ -82,7 +82,7 @@ class _ReviewSliderState extends State<ReviewSlider>
         });
       });
     _animationValue = initValue;
-    WidgetsBinding.instance!.addPostFrameCallback(_afterLayout);
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
   }
 
   _afterLayout(_) {
@@ -203,6 +203,7 @@ class MeasureLine extends StatelessWidget {
   final double width;
   final TextStyle? optionStyle;
   final double circleDiameter;
+
   List<Widget> _buildUnits() {
     var res = <Widget>[];
     var animatingUnitIndex = animationValue.round();
@@ -294,6 +295,7 @@ class Face extends StatelessWidget {
   final double animationValue;
   final Color color;
   final double circleDiameter;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -484,7 +486,7 @@ class MyIndicator extends StatelessWidget {
     required this.onDragStart,
     required this.onDragEnd,
     required this.circleDiameter,
-  })   : width = width - circleDiameter,
+  })  : width = width - circleDiameter,
         possition = animationValue == 0 ? 0 : animationValue / 4;
 
   final double animationValue;
@@ -550,6 +552,7 @@ class Head extends StatelessWidget {
   final Color color;
   final bool hasShadow;
   final double circleDiameter;
+
   @override
   Widget build(BuildContext context) {
     return Container(
